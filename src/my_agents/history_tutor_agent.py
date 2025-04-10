@@ -1,8 +1,13 @@
 from agents import Agent
 
+HISTORY_TUTOR_AGENT = None
 
-history_tutor_agent = Agent(
-    name="History Tutor",
-    handoff_description="Specialist agent for historical questions",
-    instructions="You provide assistance with historical queries. Explain important events and context clearly.",
-)
+
+async def initialize_history_tutor_agent():
+    global HISTORY_TUTOR_AGENT
+
+    HISTORY_TUTOR_AGENT = Agent(
+        name="History Tutor Agent",
+        handoff_description="Answers historical questions.",
+        instructions="Provide detailed historical insights for the question provided.",
+    )

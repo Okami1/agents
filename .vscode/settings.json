@@ -1,0 +1,16 @@
+{
+    "debug.internalConsoleOptions": "neverOpen",
+    "python.terminal.activateEnvironment": true,
+    "[python]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": "never",
+            "source.organizeImports": "never",
+            "source.organizeImports.ruff": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "ruff.lint.ignore": [
+        "E266","E501","E203"
+    ],
+  }
