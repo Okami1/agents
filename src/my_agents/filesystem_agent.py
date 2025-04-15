@@ -6,6 +6,8 @@ FILE_SYSTEM_AGENT = None
 
 
 async def initialize_file_system_agent():
+    print("  File System Agent")
+
     global FILE_SYSTEM_AGENT
 
     file_system_server = servers.SERVERS.get("FILE_SYSTEM_SERVER")

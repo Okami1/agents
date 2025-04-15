@@ -8,6 +8,7 @@ from .weather_agent import initialize_weather_agent
 # TODO: Expand this with information about specifically which initialization failed
 # TODO: Add logging
 async def initialize_agents():
+    print("Initializing agents...")
     await initialize_file_system_agent()
     await initialize_haiku_agent()
     await initialize_history_tutor_agent()

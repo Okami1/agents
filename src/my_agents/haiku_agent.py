@@ -4,6 +4,8 @@ HAIKU_AGENT = None
 
 
 async def initialize_haiku_agent():
+    print("  Haiku Agent")
+
     global HAIKU_AGENT
 
     HAIKU_AGENT = Agent(

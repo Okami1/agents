@@ -14,6 +14,7 @@ async def main(request: str):
     await initialize_agents()
     orchestration_agent = await initialize_orchestration_agent()
 
+    print("Processing request...")
     result = await Runner.run(
         orchestration_agent,
         request,

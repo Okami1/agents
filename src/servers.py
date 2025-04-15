@@ -8,6 +8,7 @@ LIST_SERVERS: list[MCPServer] = []
 
 
 async def start_servers() -> list[MCPServer]:
+    print("Starting servers...")
     global SERVERS
 
     current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -16,7 +17,7 @@ async def start_servers() -> list[MCPServer]:
     file_samples_dir = os.path.join(current_dir, "sample_files")
 
     print(
-        f"Creating filesystem server using npx @ @modelcontextprotocol/server-filesystem with: {file_samples_dir}"
+        f"  Filesystem Server using npx: @modelcontextprotocol/server-filesystem with {file_samples_dir}"
     )
 
     file_system_server = MCPServerStdio(
@@ -32,9 +33,7 @@ async def start_servers() -> list[MCPServer]:
     LIST_SERVERS.append(file_system_server)
 
     ## Brave search server
-    print(
-        "Creating brave search server using npx @ @modelcontextprotocol/server-brave-search"
-    )
+    print("  Brave Search Server using npx: @modelcontextprotocol/server-brave-search")
 
     brave_search_server = MCPServerStdio(
         name="Brave Search Server, via npx",
@@ -56,7 +55,7 @@ async def start_servers() -> list[MCPServer]:
         current_dir, "my_servers", "Weather-MCP-ClaudeDesktop", "main.py"
     )
 
-    print(f"Creating weather server using python @ {service_path}")
+    print(f"  Weather Server using local python: {service_path}")
 
     weather_server = MCPServerStdio(
         name="Weather Server, via python",

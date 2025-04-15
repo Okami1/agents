@@ -4,6 +4,8 @@ HISTORY_TUTOR_AGENT = None
 
 
 async def initialize_history_tutor_agent():
+    print("  History Tutor Agent")
+
     global HISTORY_TUTOR_AGENT
 
     HISTORY_TUTOR_AGENT = Agent(

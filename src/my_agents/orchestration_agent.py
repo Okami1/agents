@@ -8,6 +8,8 @@ ORCHESTRATION_AGENT = None
 
 
 async def initialize_orchestration_agent():
+    print("Initialization Orchestration Agent...")
+
     global ORCHESTRATION_AGENT
 
     if (

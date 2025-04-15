@@ -6,6 +6,8 @@ WEATHER_AGENT = None
 
 
 async def initialize_weather_agent():
+    print("  Weather Agent")
+
     global WEATHER_AGENT
 
     weather_server = servers.SERVERS.get("WEATHER_SERVER")
