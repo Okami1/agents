@@ -1,20 +1,16 @@
 from agents import Agent
-
-import servers
-
-FILE_SYSTEM_AGENT = None
+from agents.mcp import MCPServer
 
 
-async def initialize_file_system_agent():
-    print("  File System Agent")
+async def initialize_file_system_agent(file_system_server: MCPServer):
+    print("  Initializing FILE_SYSTEM_AGENT")
 
-    global FILE_SYSTEM_AGENT
-
-    file_system_server = servers.SERVERS.get("FILE_SYSTEM_SERVER")
     if file_system_server is None:
-        raise RuntimeError("FILE_SYSTEM_SERVER must be initialized first.")
+        raise RuntimeError(
+            "The FILE_SYSTEM_SERVER must be initialized before the File System Agent can be initialized."
+        )
 
-    FILE_SYSTEM_AGENT = Agent(
+    return Agent(
         name="File system helper",
         handoff_description="Specialist agent for answering questions about files on a given file system.",
         instructions="Use the tools to read the filesystem and answer questions based on those files.",
