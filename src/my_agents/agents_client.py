@@ -31,17 +31,30 @@ class AgentsClient:
 
         return self.agents
 
-    async def initialize_orchestration_agent(self, use_initialized_agents: bool = True):
+    async def initialize_orchestration_agent(
+        self,
+        use_initialized_agents: bool = True,
+        sequential_thinking_server: MCPServer = None,
+    ):
         print("Initializating Orchestration Agent...")
+
         if use_initialized_agents:
             handoff_agents = [agent for agent in self.agents.values()]
         else:
             handoff_agents = []
 
+        if sequential_thinking_server:
+            mcp_servers = [sequential_thinking_server]
+        else:
+            mcp_servers = []
+
         self.orchestration_agent = Agent(
             name="Triage Agent",
-            instructions="You determine which agent to use based on the user's question. Don't try to answer the question yourself. Use the handoff agents to answer the question.",
+            instructions="You determine which agent to use based on the user's question."
+            "Don't try to answer the question yourself, instead use the handoff agents to answer the question.",
+            # + "Use the mcp server tool to break down complex problems.",
             handoffs=handoff_agents,
+            mcp_servers=mcp_servers,
         )
 
         return self.orchestration_agent

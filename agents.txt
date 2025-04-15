@@ -1,7 +1,6 @@
 Goalpost 1:
 X- Write with agentic agent
 
-
 Goalpost 1.6:
 - Read Agents API reference
 - Read Tracing reference
@@ -9,23 +8,29 @@ Goalpost 1.6:
 
 Goalpost 2:
 - Further develop agent functions
+ - Fix file system lookup
+
  - Write my own server in fastmcp
  
- - Rework class architecture
-
  - Try a remote server
+  - Sequential thinking integrated into the orchestration agent
  - Try the llm-focused servers
+
+ - Improve agents:
+  - Improve orchestration agent's ability to determine the user request
+  - Improve file system agent's ability to search the file system
 
  - Wayfinder
  - E-mail writer 
- - 
-
 
 Goalpost 3:
 - Talk to agent
 
 Goalpost 4:
-- Build and run agent
+- Streaming
+
+
+Build and run agent
 
 
 

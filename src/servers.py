@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from agents.mcp import MCPServer, MCPServerStdio
+from agents.mcp import MCPServer, MCPServerSse, MCPServerStdio
 
 
 class ServersClient:
@@ -75,6 +75,24 @@ class ServersClient:
 
         self.servers["WEATHER_SERVER"] = weather_server
         self.server_list.append(weather_server)
+
+        ## Sequential thinking server
+        # print(
+        #    "  Sequential Thinking Server using sse https://remote.mcpservers.org/sequentialthinking"
+        # )
+        #
+        # sequential_thinking_server = MCPServerSse(
+        #    name="Sequential Thinking Server, via sse",
+        #    params={
+        #        "url": "https://remote.mcpservers.org/sequentialthinking",
+        #        "headers": "",
+        #        "timeout": "",
+        #    },
+        # )
+        # await sequential_thinking_server.connect()
+        #
+        # self.servers["SEQUENTIAL_THINKING_SERVER"] = sequential_thinking_server
+        # self.server_list.append(sequential_thinking_server)
 
         return self.servers
 

@@ -13,6 +13,7 @@ async def initialize_file_system_agent(file_system_server: MCPServer):
     return Agent(
         name="File system helper",
         handoff_description="Specialist agent for answering questions about files on a given file system.",
-        instructions="Use the tools to read the filesystem and answer questions based on those files.",
+        instructions="Use the tools regarding the file system to execute user requests."
+        "Make sure to do broad searches on file and their contents if the user doesn't provide specific file names.",
         mcp_servers=[file_system_server],
     )
