@@ -3,10 +3,8 @@ import os
 
 from agents.mcp import MCPServer, MCPServerStdio
 
-SERVERS: dict[str, MCPServer] = {
-    "FILE_SYSTEM_SERVER": None,
-    "WEATHER_SERVER": None,
-}
+SERVERS: dict[str, MCPServer] = {}
+LIST_SERVERS: list[MCPServer] = []
 
 
 async def start_servers() -> list[MCPServer]:
@@ -31,6 +29,7 @@ async def start_servers() -> list[MCPServer]:
     await file_system_server.connect()
 
     SERVERS["FILE_SYSTEM_SERVER"] = file_system_server
+    LIST_SERVERS.append(file_system_server)
 
     ## Weather service server
     service_path = os.path.join(
@@ -49,15 +48,11 @@ async def start_servers() -> list[MCPServer]:
     await weather_server.connect()
 
     SERVERS["WEATHER_SERVER"] = weather_server
+    LIST_SERVERS.append(weather_server)
 
 
 async def cleanup_servers() -> None:
-    cleanup_tasks = []
-    for server in SERVERS.values():
-        cleanup_tasks.append(asyncio.create_task(server.cleanup()))
-
-    if cleanup_tasks:
-        try:
-            await asyncio.gather(*cleanup_tasks, return_exceptions=True)
-        except Exception as e:
-            print(f"Warning during final cleanup: {e}")
+    # Cleanup the servers in reverse initialization order
+    for server in reversed(LIST_SERVERS):
+        await server.cleanup()
+        await asyncio.sleep(1)
