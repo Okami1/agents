@@ -24,7 +24,8 @@ async def main(request: str):
 
 
 if __name__ == "__main__":
-    asyncio.run(main("What is the weather like in Copenhagen?"))
+    asyncio.run(main("Why do asian pandas have trouble breeding in captivity?"))
+    # asyncio.run(main("What is the weather like in Copenhagen?"))
     # asyncio.run(main("read the files and list them"))
     # asyncio.run(main("who was the first president of the united states?"))
     # asyncio.run(main("Write a haiku about pokemon"))

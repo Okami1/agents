@@ -31,6 +31,26 @@ async def start_servers() -> list[MCPServer]:
     SERVERS["FILE_SYSTEM_SERVER"] = file_system_server
     LIST_SERVERS.append(file_system_server)
 
+    ## Brave search server
+    print(
+        "Creating brave search server using npx @ @modelcontextprotocol/server-brave-search"
+    )
+
+    brave_search_server = MCPServerStdio(
+        name="Brave Search Server, via npx",
+        params={
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-brave-search"],
+            "env": {
+                "BRAVE_API_KEY": os.environ.get("BRAVE_API_KEY", None),
+            },
+        },
+    )
+    await brave_search_server.connect()
+
+    SERVERS["BRAVE_SEARCH_SERVER"] = brave_search_server
+    LIST_SERVERS.append(brave_search_server)
+
     ## Weather service server
     service_path = os.path.join(
         current_dir, "my_servers", "Weather-MCP-ClaudeDesktop", "main.py"

@@ -9,7 +9,6 @@ async def initialize_file_system_agent():
     global FILE_SYSTEM_AGENT
 
     file_system_server = servers.SERVERS.get("FILE_SYSTEM_SERVER")
-
     if file_system_server is None:
         raise RuntimeError("FILE_SYSTEM_SERVER must be initialized first.")
 

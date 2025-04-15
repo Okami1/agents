@@ -1,3 +1,4 @@
+from .brave_search_agent import initialize_brave_search_agent
 from .filesystem_agent import initialize_file_system_agent
 from .haiku_agent import initialize_haiku_agent
 from .history_tutor_agent import initialize_history_tutor_agent
@@ -11,3 +12,4 @@ async def initialize_agents():
     await initialize_haiku_agent()
     await initialize_history_tutor_agent()
     await initialize_weather_agent()
+    await initialize_brave_search_agent()

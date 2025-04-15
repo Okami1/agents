@@ -9,15 +9,13 @@ Goalpost 1.6:
 
 Goalpost 2:
 - Further develop agent functions
- - New server clean-up problem
- ----------
- - Lookup
-  - Brave: https://glama.ai/blog/2024-11-25-model-context-protocol-quickstart
- 
  - Write my own server in fastmcp
  
  - Rework class architecture
- 
+
+ - Try a remote server
+ - Try the llm-focused servers
+
  - Wayfinder
  - E-mail writer 
  - 
