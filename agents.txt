@@ -3,11 +3,8 @@ Goalpost 1.5:
 - Read Tracing reference
 
 Goalpost:
-- Streaming
- - https://openai.github.io/openai-agents-python/streaming/
- 
-Goalpost:
 - Speech <-> text
+ - https://openai.github.io/openai-agents-python/voice/quickstart/
 
 
 

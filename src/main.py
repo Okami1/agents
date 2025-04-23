@@ -1,6 +1,7 @@
 import asyncio
 
-from agents import Runner, RunResult
+from agents import ItemHelpers, Runner, RunResult
+from openai.types.responses import ResponseTextDeltaEvent
 
 from my_agents import AgentsClient
 from servers import ServersClient
@@ -31,15 +32,29 @@ async def main():
             if query.lower() == "quit":
                 break
 
-            response = await Runner.run(
+            response = Runner.run_streamed(
                 starting_agent=orchestration_agent,
                 input=history + [{"role": "user", "content": query}],
                 context=history,
             )
+            async for event in response.stream_events():
+                if event.type == "raw_response_event" and isinstance(
+                    event.data, ResponseTextDeltaEvent
+                ):
+                    print(event.data.delta, end="", flush=True)
+                elif event.type == "agent_updated_stream_event":
+                    print(f"Agent updated: {event.new_agent.name}")
+                    continue
+                elif event.type == "run_item_stream_event":
+                    if event.item.type == "tool_call_item":
+                        print(f"-- Agent called tool '{event.item.raw_item.name}'")
+                    elif event.item.type == "tool_call_output_item":
+                        print(event.item)
+                        print("-- Agent received response from tool")
+                    else:
+                        pass
 
             history = update_history(response)
-
-            print("\n" + response.final_output)
 
         except Exception as e:
             print(f"\nError: {str(e)}")
