@@ -10,7 +10,7 @@ async def initialize_weather_agent(weather_server: MCPServer):
 
     return Agent(
         name="weather helper",
-        handoff_description="Specialist agent for answering questions about including alerts and air quality.",
+        handoff_description="Specialist agent for answering questions about weather including alerts and air quality.",
         instructions="Use the tools to answer questions about the weather.",
         mcp_servers=[weather_server],
     )

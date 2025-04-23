@@ -1,12 +1,18 @@
 import asyncio
 
-from agents import Runner
+from agents import Runner, RunResult
 
 from my_agents import AgentsClient
 from servers import ServersClient
 
 
-async def main(request: str):
+def update_history(response: RunResult, messages_to_keep: int = 10) -> list[dict]:
+    history = response.to_input_list()
+    history = [msg for msg in history if msg.get("role") and msg.get("content")]
+    return history[-messages_to_keep:]
+
+
+async def main():
     servers_client = ServersClient()
     servers = await servers_client.start_servers()
 
@@ -14,36 +20,38 @@ async def main(request: str):
     await agents_client.initialize_agents(servers=servers)
     orchestration_agent = await agents_client.initialize_orchestration_agent(
         use_initialized_agents=True,
-        # sequential_thinking_server=servers.get("SEQUENTIAL_THINKING_SERVER"),
     )
 
-    print("Processing request...")
-    result = await Runner.run(
-        orchestration_agent,
-        request,
-    )
-    print(result.final_output)
+    print("Client ready!")
+    history = []
+    while True:
+        try:
+            query = input("\nQuery: ").strip()
+
+            if query.lower() == "quit":
+                break
+
+            response = await Runner.run(
+                starting_agent=orchestration_agent,
+                input=history + [{"role": "user", "content": query}],
+                context=history,
+            )
+
+            history = update_history(response)
+
+            print("\n" + response.final_output)
+
+        except Exception as e:
+            print(f"\nError: {str(e)}")
 
     await servers_client.cleanup_servers()
 
 
 if __name__ == "__main__":
-    # asyncio.run(main("What is the goal of the game Twilight Imperium?"))
-    # asyncio.run(main("What is the weather like in Copenhagen?"))
-    # asyncio.run(
-    #    main(
-    #        "I have a file listing my favorite books. Read it and tell me what my 10 favorite books are"
-    #    )
-    # )
-    # asyncio.run(
-    #    main(
-    #        "I have a file listing my favorite books named 'favorite_books.txt' but I have changed my mind. Remove my 17th favorite book and update the list."
-    #    )
-    # )
-    asyncio.run(
-        main(
-            "I have a file listing my favorite books named 'favorite_books.txt'. Add 'Moby-Dick' by Herman Melville as my 17th favorite book to the list."
-        )
-    )
-    # asyncio.run(main("who was the first president of the united states?"))
-    # asyncio.run(main("Write a haiku about pokemon"))
+    asyncio.run(main())
+    # "What is the goal of the game Twilight Imperium?"
+    # "What is the weather like in Copenhagen?"
+    # "What are my favorite songs?"
+    # "Find x in this equation: x^3 - 4x^2 + 6x - 24 = 0"
+    # "who was the first president of the united states?"
+    # "Write a haiku about pokemon"

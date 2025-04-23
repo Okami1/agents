@@ -1,19 +1,18 @@
-Goalpost 1:
-X- Write with agentic agent
-
-Goalpost 1.6:
+Goalpost 1.5:
 - Read Agents API reference
 - Read Tracing reference
 
-
-Goalpost 2:
-- Further develop agent functions
- - Fix file system lookup
-
- - Write my own server in fastmcp
+Goalpost:
+- Streaming
+ - https://openai.github.io/openai-agents-python/streaming/
  
- - Try a remote server
-  - Sequential thinking integrated into the orchestration agent
+Goalpost:
+- Speech <-> text
+
+
+
+Goalpost
+- Further develop agent functions
  - Try the llm-focused servers
 
  - Improve agents:
@@ -23,24 +22,34 @@ Goalpost 2:
  - Wayfinder
  - E-mail writer 
 
-Goalpost 3:
-- Talk to agent
-
-Goalpost 4:
-- Streaming
-
-
-Build and run agent
 
 
 
 
+Goalpost
+- Build and run agent
+
+
+Future:
+- Store history in vector DB
+- Summarize history beyond last x
 
 Research:
 Claude: https://claude.ai/login?returnTo=%2F%3F
 
 
 
+RECOMMENDED_PROMPT_PREFIX = (
+        "# System context\nYou are part of a multi-agent system called the Agents SDK,"
+        "designed to make agent coordination and execution easy."
+        "Agents uses two primary abstraction: **Agents** and **Handoffs**."
+        "An agent encompasses instructions and tools and can hand off a conversation to another agent when appropriate."
+        "Handoffs are achieved by calling a handoff function, generally named `transfer_to_<agent_name>`."
+        "Transfers between agents are handled seamlessly in the background;"
+        "do not mention or draw attention to these transfers in your conversation with the user.\n"
+    )
+
 
 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
 XYLØ?Gravity!333
+
