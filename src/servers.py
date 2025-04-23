@@ -1,7 +1,7 @@
 import asyncio
 import os
 
-from agents.mcp import MCPServer, MCPServerSse, MCPServerStdio
+from agents.mcp import MCPServer, MCPServerStdio
 
 
 class ServersClient:
@@ -76,27 +76,46 @@ class ServersClient:
         self.servers["WEATHER_SERVER"] = weather_server
         self.server_list.append(weather_server)
 
+        ## Wolfram Alpha server
+        service_path = os.path.join(
+            self.current_dir, "my_servers", "wolframalpha_server", "main.py"
+        )
+
+        print(f"  Wolfram Alpha Server using local python: {service_path}")
+
+        wolfram_alpha_server = MCPServerStdio(
+            name="Wolfram Alpha Server, via python",
+            params={
+                "command": "python",
+                "args": [service_path],
+            },
+        )
+        await wolfram_alpha_server.connect()
+
+        self.servers["WOLFRAM_ALPHA_SERVER"] = wolfram_alpha_server
+        self.server_list.append(wolfram_alpha_server)
+
         ## Sequential thinking server
-        # print(
-        #    "  Sequential Thinking Server using sse https://remote.mcpservers.org/sequentialthinking"
-        # )
-        #
-        # sequential_thinking_server = MCPServerSse(
-        #    name="Sequential Thinking Server, via sse",
-        #    params={
-        #        "url": "https://remote.mcpservers.org/sequentialthinking",
-        #        "headers": "",
-        #        "timeout": "",
-        #    },
-        # )
-        # await sequential_thinking_server.connect()
-        #
-        # self.servers["SEQUENTIAL_THINKING_SERVER"] = sequential_thinking_server
-        # self.server_list.append(sequential_thinking_server)
+        print(
+            "  Sequential Thinking Server using npx @modelcontextprotocol/server-sequential-thinking"
+        )
+
+        sequential_thinking_server = MCPServerStdio(
+            name="Sequential Thinking Server, via npx",
+            params={
+                "command": "npx",
+                "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+            },
+        )
+        await sequential_thinking_server.connect()
+
+        self.servers["SEQUENTIAL_THINKING_SERVER"] = sequential_thinking_server
+        self.server_list.append(sequential_thinking_server)
 
         return self.servers
 
     async def cleanup_servers(self) -> None:
+        print("Cleaning up servers...")
         # Cleanup the servers in reverse initialization order
         for server in reversed(self.server_list):
             await server.cleanup()

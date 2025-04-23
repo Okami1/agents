@@ -5,6 +5,7 @@ from .brave_search_agent import initialize_brave_search_agent
 from .filesystem_agent import initialize_file_system_agent
 from .haiku_agent import initialize_haiku_agent
 from .history_tutor_agent import initialize_history_tutor_agent
+from .math_agent import initialize_math_agent
 from .weather_agent import initialize_weather_agent
 
 
@@ -18,7 +19,8 @@ class AgentsClient:
         print("Initializing agents...")
 
         self.agents["FILE_SYSTEM_AGENT"] = await initialize_file_system_agent(
-            file_system_server=servers.get("FILE_SYSTEM_SERVER")
+            file_system_server=servers.get("FILE_SYSTEM_SERVER"),
+            sequential_thinking_server=servers.get("SEQUENTIAL_THINKING_SERVER"),
         )
         self.agents["HAIKU_AGENT"] = await initialize_haiku_agent()
         self.agents["HISTORY_TUTOR_AGENT"] = await initialize_history_tutor_agent()
@@ -28,13 +30,15 @@ class AgentsClient:
         self.agents["BRAVE_SEARCH_AGENT"] = await initialize_brave_search_agent(
             brave_search_server=servers.get("BRAVE_SEARCH_SERVER")
         )
+        self.agents["MATH_AGENT"] = await initialize_math_agent(
+            wolfram_alpha_server=servers.get("WOLFRAM_ALPHA_SERVER")
+        )
 
         return self.agents
 
     async def initialize_orchestration_agent(
         self,
         use_initialized_agents: bool = True,
-        sequential_thinking_server: MCPServer = None,
     ):
         print("Initializating Orchestration Agent...")
 
@@ -43,18 +47,11 @@ class AgentsClient:
         else:
             handoff_agents = []
 
-        if sequential_thinking_server:
-            mcp_servers = [sequential_thinking_server]
-        else:
-            mcp_servers = []
-
         self.orchestration_agent = Agent(
             name="Triage Agent",
-            instructions="You determine which agent to use based on the user's question."
-            "Don't try to answer the question yourself, instead use the handoff agents to answer the question.",
-            # + "Use the mcp server tool to break down complex problems.",
+            instructions="You determine which agent to use based on the user's question. "
+            "Don't try to answer the question yourself, instead use the handoff agents to answer the question. ",
             handoffs=handoff_agents,
-            mcp_servers=mcp_servers,
         )
 
         return self.orchestration_agent
