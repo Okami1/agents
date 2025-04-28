@@ -1,6 +1,6 @@
 import asyncio
 
-from agents import ItemHelpers, Runner, RunResult
+from agents import Runner, RunResult
 from openai.types.responses import ResponseTextDeltaEvent
 
 from my_agents import AgentsClient
@@ -49,7 +49,6 @@ async def main():
                     if event.item.type == "tool_call_item":
                         print(f"-- Agent called tool '{event.item.raw_item.name}'")
                     elif event.item.type == "tool_call_output_item":
-                        print(event.item)
                         print("-- Agent received response from tool")
                     else:
                         pass

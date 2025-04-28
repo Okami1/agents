@@ -8,13 +8,27 @@ Goalpost:
 
 
 
-Goalpost
-- Further develop agent functions
- - Try the llm-focused servers
+Goalpost:
+- Improve agents
+ - Improve file system agent's ability to search the file system
+ - Improve weather agent to be more precise in the information it gives
+  - I don't need to know windspeed
+  - Recommend outdoor clothes(?)
+ - Add ability to use other wolfram alpha API's
+  - Manage image data
+ - Look into what I can actually get with brave search
 
- - Improve agents:
-  - Improve orchestration agent's ability to determine the user request
-  - Improve file system agent's ability to search the file system
+---------------
+
+ - Improve orchestration agent's ability to determine the user request
+  - String together multiple agents
+   - Might have to develop new agents first
+ 
+- Further develop agent functions
+ - Consider agents that integrate into generic calls
+  - Planning
+  - Translation
+ - Try the llm-focused servers
 
  - Wayfinder
  - E-mail writer 
